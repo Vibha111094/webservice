@@ -3,7 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.betsol.authentication.*;
-import com.betsol.database_operations.*;
+import com.betsol.database.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -26,11 +26,12 @@ public class MyResource {
      *
      * @return String that will be returned as a text/plain response.
      */
-	@Path("create")
+	@Path("create") 
     @POST
    //@Produces(MediaType.TEXT_PLAIN)
-    public String  create(String obj) {
-    	crud.create_user(obj);
+    public String  create(String data) {
+		Database database = new Database();
+    	database.create_user(data);
     	return "sucessful";
     	
 }
@@ -41,7 +42,7 @@ public class MyResource {
 	public Response retrieve(String name){
 		Response res= null;
 		try {
-		res = crud.retrieve_user(name);
+		res = Database.retrieve_user(name);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +56,7 @@ public class MyResource {
 	@Produces({"application/json"})
 	public Response update(String name) {
 		
-		Response response = crud.update_user(name);
+		Response response = Database.update_user(name);
 		return response;
 	}
 	
